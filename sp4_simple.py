@@ -105,8 +105,8 @@ for i in range(5000): llg(m, 2e-13)
 # switch
 alpha = 0.02
 dt    = 5e-15
-
 h_zee = np.tile([-24.6e-3/mu0, +4.3e-3/mu0, 0.0], np.prod(n)).reshape(m.shape)
+
 with open('sp4.dat', 'w') as f:
   for i in range(int(1e-9/dt)):
     f.write("%f %f %f %f\n" % ((i*1e9*dt,) + tuple(map(lambda i: np.mean(m[:,:,:,i]), range(3)))))
