@@ -41,12 +41,12 @@ def f(p):
 # newell g
 def g(p):
   x, y, z = p[0], p[1], abs(p[2])
-  return + x*y*z * asinh(z / (sqrt(x**2 + y**2) + eps))                          \
-         + y / 6.0 * (3.0 * z**2 - y**2) * asinh(x / (sqrt(y**2 + z**2) + eps))  \
-         + x / 6.0 * (3.0 * z**2 - x**2) * asinh(y / (sqrt(x**2 + z**2) + eps))  \
-         - z**3 / 6.0 * atan(x*y / (z * sqrt(x**2 + y**2 + z**2) + eps))         \
-         - z * y**2 / 2.0 * atan(x*z / (y * sqrt(x**2 + y**2 + z**2) + eps))     \
-         - z * x**2 / 2.0 * atan(y*z / (x * sqrt(x**2 + y**2 + z**2) + eps))     \
+  return + x*y*z * asinh(z / (sqrt(x**2 + y**2) + eps))                         \
+         + y / 6.0 * (3.0 * z**2 - y**2) * asinh(x / (sqrt(y**2 + z**2) + eps)) \
+         + x / 6.0 * (3.0 * z**2 - x**2) * asinh(y / (sqrt(x**2 + z**2) + eps)) \
+         - z**3 / 6.0 * atan(x*y / (z * sqrt(x**2 + y**2 + z**2) + eps))        \
+         - z * y**2 / 2.0 * atan(x*z / (y * sqrt(x**2 + y**2 + z**2) + eps))    \
+         - z * x**2 / 2.0 * atan(y*z / (x * sqrt(x**2 + y**2 + z**2) + eps))    \
          - x*y * sqrt(x**2 + y**2 + z**2) / 3.0
 
 # demag tensor setup
@@ -54,7 +54,7 @@ def set_n_demag(c, permute, func):
   it = np.nditer(n_demag[:,:,:,c], flags=['multi_index'], op_flags=['writeonly'])
   while not it.finished:
     value = 0.0
-    for i in np.rollaxis(np.indices((2, 2, 2, 2, 2, 2)), 0, 7).reshape(64, 6):
+    for i in np.rollaxis(np.indices((2,)*6), 0, 7).reshape(64, 6):
       idx = map(lambda k: (it.multi_index[k] + n[k]) % (2*n[k]) - n[k], range(3))
       value += (-1)**sum(i) * func(map(lambda j: (idx[j] + i[j] - i[j+3]) * dx[j], permute))
     it[0] = - value / (4 * pi * np.prod(dx))

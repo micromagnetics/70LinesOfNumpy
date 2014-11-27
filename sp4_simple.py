@@ -100,7 +100,7 @@ m[1:-1,:,:,0]   = 1.0
 m[(-1,0),:,:,1] = 1.0
 
 # relax
-alpha = 0.50
+alpha = 1.00
 for i in range(5000): llg(m, 2e-13)
 
 # switch
